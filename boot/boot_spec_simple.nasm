@@ -8,9 +8,20 @@
 ; Para ter certeza que o disco é bootável, a BIOS checa se os bytes
 ; 511 e 512 do setor de boot elegido contém os bytes 0xAA55.
 
-; Loop infinito
-loop:
-  jmp loop
+; Imprimindo algumas mensagem com o bootloader
+
+mov ah, 0x0e ; TTY mode
+mov al, 'H'
+int 0x10 ; Chamada de sistema para imprimir na tela
+mov al, 'e'
+int 0x10
+mov al, 'l'
+int 0x10
+int 0x10 ; Como o l está no registrador al podemos chamar a chamada de sistema novamente
+mov al, 'o'
+int 0x10
+
+jmp $ ; Salta para o endereço atual => causando um loop infinito (end. atual => end. atual)
 
 ; Preenche com zeros os bytes faltantes para os 512.
 ; Devemos ter 512 bytes como tamanho.
@@ -19,5 +30,5 @@ times 510 - ($-$$) db 0
 ; Número mágico (assinatura do boot)
 dw 0xaa55
 
-; O resultado deve ser um loop inifito que causa uma mensagem que diz
-; "Booting from hard disk..." e nada mais.
+; O Resultado agora vai ser uma mensagem de "Booting from hard disk" seguida
+; de um Hello sendo impresso pelo bootloader.
