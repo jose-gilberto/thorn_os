@@ -17,9 +17,9 @@
 
   jmp $
 
-%include "../boot_sect_print_hex.nasm"
-%include "../boot_sect_print.nasm"
-%include "../boot_sect_disk.nasm"
+%include "./boot_sect_print.nasm"
+%include "./boot_sect_print_hex.nasm"
+%include "./boot_sect_disk.nasm"
 
 times 510 - ($-$$) db 0
 dw 0xaa55
